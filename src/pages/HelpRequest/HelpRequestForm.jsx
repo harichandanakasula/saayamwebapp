@@ -1379,32 +1379,35 @@ const HelpRequestForm = ({ isEdit = false, onClose, editRequestData }) => {
         response = await createRequest(payload);
       }
       const responseRequestId = response?.data?.requestId;
-
-      setSnackbar({
-        open: true,
-        message: isEdit
+      const successMessage = responseRequestId
+        ? isEdit
+          ? `Request #${responseRequestId} updated successfully!`
+          : `New Request #${responseRequestId} submitted successfully!`
+        : isEdit
           ? "Help Request updated successfully!"
-          : "Help Request submitted successfully!",
-        severity: "success",
-      });
+          : "Help Request submitted successfully!";
 
-      setTimeout(() => {
-        if (isEdit && onClose) {
-          onClose(response?.data);
-        } else {
-          navigate("/dashboard", {
-            state: {
-              successMessage: responseRequestId
-                ? isEdit
-                  ? `Request #${responseRequestId} updated successfully!`
-                  : `New Request #${responseRequestId} submitted successfully!`
-                : isEdit
-                  ? "Help Request updated successfully!"
-                  : "Help Request submitted successfully!",
-            },
-          });
-        }
-      }, 1200);
+      if (isEdit) {
+        setSnackbar({
+          open: true,
+          message: "Help Request updated successfully!",
+          severity: "success",
+        });
+
+        setTimeout(() => {
+          if (onClose) {
+            onClose(response?.data);
+          } else {
+            navigate("/dashboard", {
+              state: { successMessage },
+            });
+          }
+        }, 1200);
+      } else {
+        navigate("/dashboard", {
+          state: { successMessage },
+        });
+      }
     } catch (error) {
       console.error("Failed to process request:", error);
       setSnackbar({
