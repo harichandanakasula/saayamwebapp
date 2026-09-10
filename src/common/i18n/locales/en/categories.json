@@ -227,7 +227,7 @@
       }
     },
     "HEALTHCARE_AND_WELLNESS": {
-      "LABEL": "Healthcare & Wellness",
+      "LABEL": "Healthcare & Wellbeing",
       "DESC": "Non-clinical medical guidance, reminders, and wellbeing support.",
       "SUBCATEGORIES": {
         "MEDICAL_CONSULTATION": {
